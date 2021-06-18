@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Created 06/17/2021
+# Script to fuzz HTTP requests by checking all HTTP verbs and outputting the response codes.
+
+# POC
+# 1. Run ./fuzzyhtml
+# 2. Feed it a URL
+
+# Example:
+# $ ./fuzzyhtml
+# $
+# $
+# $
+# $ Enter the URL to test:
+# $ http://example.com/user1/
+# $
+# $ output respose
+
+
+# sudo code:
+
+# prompt user for url
+# save URL to variable
+#
+# craft HTTP requests with all request types
+# send HTTP requests
+#
+# output response
+
+# Real code:
+
+echo Enter in a URL to fuzz:
+read URL
+
+curl $URL
+curl -X HEAD
+curl -X POST $URL
+curl -X PUT $URL
+# curl -X DELETE $URL
+curl -X CONNECT $URL
+curl -X OPTIONS $URL
+curl -X TRACE $URL
+curl -X PATCH $URL
