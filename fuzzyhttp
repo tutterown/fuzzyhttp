@@ -3,53 +3,33 @@
 # Created 06/17/2021
 # Script to fuzz HTTP requests by checking all HTTP verbs and outputting the response codes.
 
-# POC
-# 1. Run ./fuzzyhtml
-# 2. Feed it a URL
-
-# Example:
-# $ ./fuzzyhtml
-# $
-# $
-# $
-# $ Enter the URL to test:
-# $ http://example.com/user1/
-# $
-# $ output respose
-
-
-# sudo code:
-
-# prompt user for url
-# save URL to variable
-#
-# craft HTTP requests with all request types
-# send HTTP requests
-#
-# output response
-
-# Real code:
-
-# help code
+# Help
 while getopts ":h" option; do
-	echo use -d to include the DELETE request
+	echo Usage: ./fuzzyhttp
+	echo 
+	echo -d   Include a DELETE request - THIS IS CURRENTLY BROKEN
+	echo Example: ./fuzzyhttp -d
 	exit
 done
 
 echo Enter in a URL to fuzz:
 read URL
 
-while getopts ":d" option; do
-	curl -X DELETE $URL
-done
+#while getopts ":d" option; do
+#	curl -X DELETE $URL
+#done
 
-curl $URL
-curl -X HEAD
-curl -X POST $URL
-curl -X PUT $URL
-curl -X CONNECT $URL
-curl -X OPTIONS $URL
-curl -X TRACE $URL
-curl -X PATCH $URL
+echo 
+echo HTTP requests to $URL
+echo 
 
+
+curl -s -I $URL | grep 'HTTP' | sed 's\^\GET \'
+curl -s -I -X HEAD $URL | grep 'HTTP' | sed 's\^\HEAD \'
+curl -s -I -X POST $URL | grep  'HTTP' | sed 's\^\POST \'
+curl -s -I -X PUT $URL | grep 'HTTP' | sed 's\^\PUT \'
+curl -s -I -X CONNECT $URL | grep 'HTTP' | sed 's\^\CONNECT  \'
+curl -s -I -X OPTIONS $URL | grep 'HTTP' | sed 's\^\OPTIONS  \'
+curl -s -I -X TRACE $URL | grep 'HTTP' | sed 's\^\TRACE \'
+curl -s -I -X PATCH $URL | grep 'HTTP' | sed 's\^\PATCH \'
 
