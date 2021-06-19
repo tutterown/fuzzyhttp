@@ -30,15 +30,26 @@
 
 # Real code:
 
+# help code
+while getopts ":h" option; do
+	echo use -d to include the DELETE request
+	exit
+done
+
 echo Enter in a URL to fuzz:
 read URL
+
+while getopts ":d" option; do
+	curl -X DELETE $URL
+done
 
 curl $URL
 curl -X HEAD
 curl -X POST $URL
 curl -X PUT $URL
-# curl -X DELETE $URL
 curl -X CONNECT $URL
 curl -X OPTIONS $URL
 curl -X TRACE $URL
 curl -X PATCH $URL
+
+
