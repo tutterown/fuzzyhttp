@@ -4,14 +4,14 @@
 # Script to fuzz HTTP requests by checking all HTTP verbs and outputting the response codes.
 
 # Help
-while getopts ":adh" option; do
+while getopts ":dh" option; do
 	case "$option" in
-		a)
-			echo "-a   Include all request types. This includes DELETE"
-			;;
 
 		d)
-			echo "-d   Include the DELETE request type"
+			echo "Including the DELETE request type"
+			del_function(){
+				curl -s -I -X DELETE $URL | grep 'HTTP' | sed 's\^\DELETE \'
+			}
 			;;
 
 		h)
@@ -50,3 +50,4 @@ curl -s -I -X CONNECT $URL | grep 'HTTP' | sed 's\^\CONNECT  \'
 curl -s -I -X OPTIONS $URL | grep 'HTTP' | sed 's\^\OPTIONS  \'
 curl -s -I -X TRACE $URL | grep 'HTTP' | sed 's\^\TRACE \'
 curl -s -I -X PATCH $URL | grep 'HTTP' | sed 's\^\PATCH \'
+type del_function &>/dev/null && del_function
