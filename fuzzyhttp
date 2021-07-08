@@ -4,26 +4,44 @@
 # Script to fuzz HTTP requests by checking all HTTP verbs and outputting the response codes.
 
 # Help
-while getopts ":h" option; do
-	echo Usage: ./fuzzyhttp
-	echo 
-	echo -d   Include a DELETE request - THIS IS CURRENTLY BROKEN
-	echo Example: ./fuzzyhttp -d
-	exit
+while getopts ":adh" option; do
+	case "$option" in
+		a)
+			echo "-a   Include all request types. This includes DELETE"
+			;;
+
+		d)
+			echo "-d   Include the DELETE request type"
+			;;
+
+		h)
+			echo "Usage: ./fuzzyhttp"
+			echo
+			echo "-a   Include all request types. This includes DELETE"
+			echo "Example: ./fuzzyhttp -a"
+			echo
+			echo "-d   Include a DELETE request"
+			echo "Example : ./fuzzyhttp -d"
+			echo
+			echo "-h   Help menu"
+			;;
+
+		?)
+			echo "Usage: ./fuzzyhttp"
+			echo "For help, use -h"
+			exit 1
+			;;
+	esac
 done
 
 echo Enter in a URL to fuzz:
 read URL
 
-#while getopts ":d" option; do
-#	curl -X DELETE $URL
-#done
-
 echo 
 echo HTTP requests to $URL
 echo 
 
-
+# Output results:
 curl -s -I $URL | grep 'HTTP' | sed 's\^\GET \'
 curl -s -I -X HEAD $URL | grep 'HTTP' | sed 's\^\HEAD \'
 curl -s -I -X POST $URL | grep  'HTTP' | sed 's\^\POST \'
@@ -32,4 +50,3 @@ curl -s -I -X CONNECT $URL | grep 'HTTP' | sed 's\^\CONNECT  \'
 curl -s -I -X OPTIONS $URL | grep 'HTTP' | sed 's\^\OPTIONS  \'
 curl -s -I -X TRACE $URL | grep 'HTTP' | sed 's\^\TRACE \'
 curl -s -I -X PATCH $URL | grep 'HTTP' | sed 's\^\PATCH \'
-
