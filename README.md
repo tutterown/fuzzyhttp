@@ -2,6 +2,10 @@
 
 Fuzzyhttp is a bash script that will take a URL and output a the HTTP Header response for each HTTP response type.
 
+# Compatibility 
+
+This has only been successfully tested on Kali Linux. It does not output the data properly on Mac. 
+
 # POC
 
 To run the script, simply enter the following command:
